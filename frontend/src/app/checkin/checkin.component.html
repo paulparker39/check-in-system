@@ -1,0 +1,28 @@
+<h1>Check-In</h1>
+
+
+<form [formGroup]="checkInForm" (ngSubmit)="onSubmit()">
+
+    <div>
+      <label for="pid">
+        PID
+      </label>
+      <input id="pid" type="text" formControlName="pid">
+    </div>
+    <button class="button" type="submit">Register</button>
+  
+  </form>
+
+  <div *ngIf="formSubmit">
+    <div class="list-item" *ngFor="let item of filteredItems">
+      <h3>{{ item[0] }} {{ item[1] }}</h3>
+    </div>
+  </div>
+
+  <div>
+    <h3>
+        <a 
+        [routerLink] = "['/']"> 
+        Home</a>
+    </h3>
+</div>
