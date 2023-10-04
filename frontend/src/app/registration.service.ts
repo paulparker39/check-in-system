@@ -52,7 +52,7 @@ export class RegistrationService {
 
     let user: User = {pid, first_name, last_name};
 
-    return throwError(() => "TODO: Implement me.");
+    return this.http.post<User>("/api/registrations", user); 
   }
 
 }
