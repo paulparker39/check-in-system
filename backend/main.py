@@ -2,6 +2,8 @@ from fastapi import FastAPI, HTTPException, Depends
 from models.user import User
 from services.storage import StorageService
 import os
+from models.checkin_request import CheckinRequest
+from models.checkin import Checkin
 
 app = FastAPI()
 
@@ -29,5 +31,35 @@ def reset(storage_service: StorageService = Depends()) -> str:
     else:
         storage_service.reset()
         storage_service.create_registration(User(pid=710453084, first_name="Kris", last_name="Jordan"))
+        storage_service.create_registration(User(pid=730487390, first_name="Paul", last_name="Parker"))
         storage_service.create_checkin(710453084)
+        storage_service.create_checkin(730487390)
         return "OK"
+    
+@app.post("/api/checkin")
+def new_checkin(checkin_request: CheckinRequest, storage_service: StorageService = Depends()) -> Checkin:
+    """Create a new checkin for a registered user"""
+    try:
+        pid = checkin_request.pid
+        checkin = storage_service.create_checkin(pid)
+        return Checkin(user=checkin.user, created_at=checkin.created_at)
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    
+
+@app.get("/api/checkin")
+def list_checkins(storage_service: StorageService = Depends()) -> list[Checkin]:
+    """List all checkins in the system."""
+    return storage_service.get_checkins()
+    
+
+@app.delete("/api/registrations/{pid}")
+def delete_registrations(pid: int, storage_service: StorageService = Depends()):
+    """Delete a registration"""
+    is_deleted = storage_service.delete_registration(pid)
+    if not is_deleted:
+        raise HTTPException(status_code=404, detail=str(e))
+    else:
+        return {"message": f"User deleted successfully"}
+
+

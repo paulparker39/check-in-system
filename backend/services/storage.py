@@ -106,3 +106,21 @@ class StorageService:
             List of all checkins."""
         global _checkins
         return _checkins
+    
+    def delete_registration(self, pid: int) -> bool:
+        """Delete a registered user and their associated checkins  from the system"""
+        global _registrations, _checkins
+        # test if the pid is registered
+        if pid not in _registrations:
+            raise Exception(f"User with PID {pid} does not exist.")
+        # if it is registered, then delete it from the _registrations dictionary
+        del _registrations[pid]
+        # check if the pid has been checked in, and if it has, then delete it
+        i=0
+        while i < len(_checkins):
+            if _checkins[i].user.pid == pid:
+                del _checkins[i]
+                return True
+                
+            i += 1
+        return False
