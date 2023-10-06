@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { RegistrationService } from '../registration.service';
 import { Checkin, User } from '../user';
 import { CheckinService } from '../checkin.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DeleteService } from '../delete.service';
 
 @Component({
   selector: 'app-stats',
@@ -10,16 +12,50 @@ import { CheckinService } from '../checkin.service';
   styleUrls: ['./stats.component.css']
 })
 export class StatsComponent {
-
   public users$: Observable<User[]>;
-  public checkedInUsers$: Observable<Checkin[]>
+  public checkedInUsers$: Observable<Checkin[]>;
+  public form: FormGroup; // Initialize the form property as a FormGroup
 
-  constructor(registrationService: RegistrationService, checkinService: CheckinService) {
+  constructor(
+    private registrationService: RegistrationService,
+    private checkinService: CheckinService,
+    private deleteService: DeleteService,
+    private formBuilder: FormBuilder
+  ) {
     this.users$ = registrationService.getUsers();
     this.checkedInUsers$ = checkinService.getCheckins();
-    this.checkedInUsers$.subscribe(data => {
-      console.log(data); // Log the data received from the API
+    
+    // Initialize the form using FormBuilder
+    this.form = this.formBuilder.group({
+      pid: ''
     });
   }
 
+
+
+  onSubmit(): void {
+    let form = this.form.value;
+    let pid = parseInt(form.pid ?? "");
+    this.deleteService
+    .deleteUser(pid)
+    .subscribe({
+      next: () => this.onSuccess(),
+      error: (err) => this.onError(err)
+    });
+  }
+
+  private onSuccess(): void {
+    this.users$ = this.registrationService.getUsers();
+    this.checkedInUsers$ = this.checkinService.getCheckins();
+    window.alert(`User deleted successfully.`);
+    this.form.reset();
+  }
+
+  private onError(err: Error) {
+    if (err.message) {
+      window.alert(err.message);
+    } else {
+      window.alert("Unknown error: " + JSON.stringify(err));
+    }
+  }
 }

@@ -35,4 +35,14 @@
 
 <hr>
 
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="pid">PID</label>
+        <input id="pid" type="text" formControlName="pid">
+      </div>
+
+    <button class="button" type="submit">Delete</button>
+</form>
+
 <a routerLink="/">Home</a>

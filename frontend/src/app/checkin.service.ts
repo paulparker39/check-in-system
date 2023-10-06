@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, switchMap, throwError, } from 'rxjs';
+import { Observable, throwError, } from 'rxjs';
 import { Checkin, CheckinRequest } from './user';
 
 
