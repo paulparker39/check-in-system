@@ -1,3 +1,4 @@
+import logging
 from fastapi import FastAPI, HTTPException, Depends
 from models.user import User
 from services.storage import StorageService
@@ -41,9 +42,9 @@ def new_checkin(checkin_request: CheckinRequest, storage_service: StorageService
     """Create a new checkin for a registered user"""
     try:
         pid = checkin_request.pid
-        checkin = storage_service.create_checkin(pid)
-        return Checkin(user=checkin.user, created_at=checkin.created_at)
+        return storage_service.create_checkin(pid)
     except Exception as e:
+        logging.error(f"Error creating check-in: {str(e)}")
         raise HTTPException(status_code=422, detail=str(e))
     
 

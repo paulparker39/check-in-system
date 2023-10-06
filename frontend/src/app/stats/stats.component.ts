@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RegistrationService } from '../registration.service';
-import { User } from '../user';
+import { Checkin, User } from '../user';
+import { CheckinService } from '../checkin.service';
 
 @Component({
   selector: 'app-stats',
@@ -11,9 +12,14 @@ import { User } from '../user';
 export class StatsComponent {
 
   public users$: Observable<User[]>;
+  public checkedInUsers$: Observable<Checkin[]>
 
-  constructor(registrationService: RegistrationService) {
+  constructor(registrationService: RegistrationService, checkinService: CheckinService) {
     this.users$ = registrationService.getUsers();
+    this.checkedInUsers$ = checkinService.getCheckins();
+    this.checkedInUsers$.subscribe(data => {
+      console.log(data); // Log the data received from the API
+    });
   }
 
 }

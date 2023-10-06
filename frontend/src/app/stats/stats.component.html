@@ -15,6 +15,23 @@
         </tr>
     </tbody>
 </table>
+<h2>Checked In Members</h2>
+<table>
+    <thead>
+        <td>PID</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Time of Checkin</td>
+    </thead>
+    <tbody>
+        <tr *ngFor="let checkin of checkedInUsers$ | async">
+            <td>{{ checkin.user.first_name}}</td>
+            <td>{{ checkin.user.last_name }}</td>
+            <td>{{ checkin.user.pid }}</td>
+            <td>{{ checkin.created_at | date:'MM/dd/yyyy HH:mm:ss' }}</td>
+        </tr>
+    </tbody>
+</table>
 
 <hr>
 
