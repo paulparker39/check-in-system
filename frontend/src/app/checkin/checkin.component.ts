@@ -17,8 +17,7 @@ export class CheckinComponent{
   constructor(
     private formBuilder: FormBuilder,
     private listService: RegistrationService,
-    private checkinService: CheckinService,
-    private http: HttpClient
+    private checkinService: CheckinService
   ){}
   items = this.listService.getUsers();
   checkInForm = this.formBuilder.group({
