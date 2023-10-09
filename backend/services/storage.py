@@ -123,4 +123,4 @@ class StorageService:
                 return True
                 
             i += 1
-        return False
+        return True
