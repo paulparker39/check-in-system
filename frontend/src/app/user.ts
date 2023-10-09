@@ -16,5 +16,4 @@ export interface Checkin {
 
 export interface CheckinRequest {
     pid: number;
-    
 }

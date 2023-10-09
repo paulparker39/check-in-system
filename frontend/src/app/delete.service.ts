@@ -10,6 +10,7 @@ export class DeleteService {
   constructor(private http: HttpClient) { }
 
   deleteUser(pid: number): Observable<any> {
+    
     return this.http.delete(`/api/registrations/${pid}`);
   }
 
