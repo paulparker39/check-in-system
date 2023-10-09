@@ -116,11 +116,11 @@ class StorageService:
         # if it is registered, then delete it from the _registrations dictionary
         del _registrations[pid]
         # check if the pid has been checked in, and if it has, then delete it
-        i=0
+        i = 0
         while i < len(_checkins):
             if _checkins[i].user.pid == pid:
                 del _checkins[i]
                 return True
                 
             i += 1
-        return False
+        return True

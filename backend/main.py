@@ -5,6 +5,7 @@ from services.storage import StorageService
 import os
 from models.checkin_request import CheckinRequest
 from models.checkin import Checkin
+from static_files import StaticFileMiddleware
 
 app = FastAPI()
 
@@ -64,3 +65,4 @@ def delete_registrations(pid: int, storage_service: StorageService = Depends()):
         return {"message": f"User deleted successfully"}
 
 
+app.mount("/", StaticFileMiddleware("../static", "index.html"))

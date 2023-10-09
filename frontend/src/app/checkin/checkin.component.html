@@ -9,15 +9,10 @@
       </label>
       <input id="pid" type="text" formControlName="pid">
     </div>
-    <button class="button" type="submit">Register</button>
+    <button class="button" type="submit">Checkin</button>
   
   </form>
 
-  <div *ngIf="formSubmit">
-    <div class="list-item" *ngFor="let item of filteredItems">
-      <h3>{{ item[0] }} {{ item[1] }}</h3>
-    </div>
-  </div>
 
   <div>
     <h3>

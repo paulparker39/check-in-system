@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RegistrationService } from '../registration.service';
 import {CheckinService} from '../checkin.service';
-import { Observable } from 'rxjs';
-import { User, Checkin} from '../user';
-import { HttpClient } from '@angular/common/http';
+import { Checkin} from '../user';
 
 @Component({
   selector: 'app-checkin-details',
@@ -17,18 +15,13 @@ export class CheckinComponent{
   constructor(
     private formBuilder: FormBuilder,
     private listService: RegistrationService,
-    private checkinService: CheckinService,
-    private http: HttpClient
+    private checkinService: CheckinService
   ){}
-  items = this.listService.getUsers();
+ 
   checkInForm = this.formBuilder.group({
   pid: [''],
   });
 
-  
-  formSubmit = false;
-  filteredItems: any[] | undefined;
-  submissionDateTime: Date | null = null;
 
   
   onSubmit(): void {
